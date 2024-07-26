@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const endpoint = "https://striveschool-api.herokuapp.com/api/product/";
-    const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUzNmYyNjBjYzAwMTVjYzBkY2EiLCJpYXQiOjE3MjIwMDA3MjUsImV4cCI6MTcyMzIxMDMyNX0.ONMn3aq7hMT8YOZrbP_jT1WKZ8M93UcGIFZf-Z8aAHw";
+    const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzYjZhZmYyNjBjYzAwMTVjYzBmOTIiLCJpYXQiOjE3MjIwMDUxNjgsImV4cCI6MTcyMzIxNDc2OH0.Yc2a3DLUY28wxwaCC1Fxp6CKT11SOAavGb01xC3EJj0";
 
-    const fetchData = async (endpoint) => {
+    const fetchData = async (url) => {
         try {
-            const response = await fetch(endpoint, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${apiKey}`,
@@ -55,14 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-
     const modalFetch = async (productId) => {
         const data = await fetchData(`${endpoint}${productId}`);
         if (data) {
             openModal(data);
         }
     };
-
 
     const card = async () => {
         const loading = document.getElementById('loading');
@@ -83,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('load', card);
-
 
     const btnReset = document.getElementById('reset');
     const btnSave = document.getElementById('save');

@@ -1,15 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     const endpoint = "https://striveschool-api.herokuapp.com/api/product/";
-    const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUzNmYyNjBjYzAwMTVjYzBkY2EiLCJpYXQiOjE3MjIwMDA3MjUsImV4cCI6MTcyMzIxMDMyNX0.ONMn3aq7hMT8YOZrbP_jT1WKZ8M93UcGIFZf-Z8aAHw";
+    const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzYjZhZmYyNjBjYzAwMTVjYzBmOTIiLCJpYXQiOjE3MjIwMDUxNjgsImV4cCI6MTcyMzIxNDc2OH0.Yc2a3DLUY28wxwaCC1Fxp6CKT11SOAavGb01xC3EJj0";
 
     const btnReset = document.getElementById('reset');
     const btnSave = document.getElementById('save');
-    const nameProduct = document.getElementById('title'); // ID aggiornato
-    const details = document.getElementById('description'); // ID aggiornato
-    const priceProduct = document.getElementById('price'); // ID aggiornato
-    const imgProduct = document.getElementById('imageUrl'); // ID aggiornato
+    const nameProduct = document.getElementById('title');
+    const details = document.getElementById('description');
+    const priceProduct = document.getElementById('price');
+    const imgProduct = document.getElementById('imageUrl');
 
     let newProduct = {};
+
+    const fetchData = async (url) => {
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const data = await response.json();
+            console.log('I dati sono stati ricevuti:', data);
+            return data;
+        } catch (error) {
+            console.log('Si è verificato un errore', error);
+            return null;
+        }
+    };
 
     const postFetch = async (product) => {
         try {
@@ -21,9 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(product),
             });
-
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             const data = await response.json();
-            console.log(data);
+            console.log('Nuovo prodotto creato:', data);
         } catch (error) {
             console.log(`Errore durante l'invio: ${error}`);
         }
@@ -44,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             newProduct = {
-                brand: "Brand di default", 
+                brand: "Brand di default",
                 description: details.value,
                 imageUrl: imgProduct.value,
                 name: nameProduct.value,
@@ -73,4 +92,38 @@ document.addEventListener('DOMContentLoaded', () => {
             resetForm();
         }
     });
+
+    const displayProducts = async () => {
+        const loading = document.getElementById('loading');
+        const productsList = document.getElementById('products-list');
+
+        if (loading && productsList) {
+            const data = await fetchData(endpoint);
+            if (data) {
+                loading.style.display = 'none';
+                productsList.innerHTML = '';
+                data.forEach((product) => {
+                    productsList.innerHTML += `
+                      <div class="card mb-2 ms-1 shadow opacity-75 scale" style="width: 19rem;">
+                        <img src="${product.imageUrl}" class="card-img-top" alt="Immagine Prodotto">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                          <div class="mb-3">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text lh-sm">${product.description}</p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <a href="edit.html?id=${product._id}" class="btn btn-warning" id="edit-${product._id}">Modifica</a>
+                            <a href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                              onclick="modalFetch('${product._id}')">Scopri di più</a>
+                          </div>
+                        </div>
+                      </div>`;
+                });
+            }
+        } else {
+            console.error('Uno o più elementi non sono stati trovati.');
+        }
+    };
+
+    window.addEventListener('load', displayProducts);
 });

@@ -1,0 +1,126 @@
+/* Import Pixelated Font */
+@import url('https://fonts.googleapis.com/css2?family=8bit+Operator+Plus:wght@400;700&display=swap');
+
+/* General Reset and Box-Sizing */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body Styles */
+body {
+    font-family: '8bit Operator Plus', cursive; /* Font pixellato per effetto arcade */
+    background-color: #000; /* Sfondo nero per effetto CRT */
+    color: #0F0; /* Testo verde neon */
+    overflow: hidden; /* Rimuove le barre di scorrimento per un effetto CRT */
+}
+
+/* Header and Navbar Styles */
+header {
+    background-color: #222;
+    border-bottom: 2px solid #0F0;
+}
+
+.navbar {
+    background-color: #222;
+}
+
+.navbar-brand img {
+    height: 40px; /* Ridimensiona l'immagine del logo */
+}
+
+.navbar a {
+    color: #0F0;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.navbar a:hover {
+    color: #FF0;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid #0F0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #111;
+    border: 2px solid #0F0;
+    color: #0F0;
+}
+
+.card .btn {
+    background-color: #0F0;
+    border: none;
+    color: #000;
+}
+
+.card .btn:hover {
+    background-color: #FF0;
+    color: #000;
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: #222;
+    color: #0F0;
+    border: 2px solid #0F0;
+}
+
+.form-control {
+    background-color: #111;
+    border: 2px solid #0F0;
+    color: #0F0;
+}
+
+.form-control::placeholder {
+    color: #0F0;
+}
+
+.btn-warning {
+    background-color: #FF0;
+    color: #000;
+}
+
+.btn-warning:hover {
+    background-color: #0F0;
+    color: #000;
+}
+
+.btn.border-black {
+    border: 2px solid #0F0;
+}
+
+/* Input and Button Styles */
+input,
+textarea {
+    background-color: #111;
+    border: 2px solid #0F0;
+    color: #0F0;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #0F0;
+}
+
+/* Additional Styling for Layout and Responsive Design */
+.container-fluid {
+    max-width: 1200px;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    .col-8 {
+        width: 100% !important;
+    }
+}
